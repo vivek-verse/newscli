@@ -9,5 +9,6 @@ edition = "2021"
 colour = "0.6.0"
 crossterm = "0.20.0"
 dotenv = "0.15.0"
-newslib = { path = "./newslib" }
+newslib = { path = "./newslib", features = ["async"] }
 termimad = "0.14.2"
+tokio = { version = "1.22.0", features = ["full"] }

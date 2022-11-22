@@ -15,7 +15,8 @@ fn render_articles(articles: &Vec<Article>) {
     }
 }
 
-fn main() -> Result<(), Box<dyn Error>> {
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn Error>> {
     dotenv()?;
 
     let api_key = std::env::var("API_KEY")?;
@@ -24,11 +25,9 @@ fn main() -> Result<(), Box<dyn Error>> {
     newsapi
         .endpoint(Endpoint::TopHeadlines)
         .country(Country::Us);
-    let url = "https://newsapi.org/v2/top-headlines?country=us&apiKey=";
 
-    let url = format!("{}{}", url, api_key);
-
-    let newsapi_response = newsapi.fetch()?;
+    let newsapi_response = newsapi.fetch_async().await?;
+    // let newsapi_response = newsapi.fetch()?;
 
     render_articles(&newsapi_response.articles());
 
